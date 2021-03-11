@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  party: MyString
+  profession: MyString
+  avatar: MyString
+  is_currently_candidate: false
+  is_incumbent: MyString
+  current_coh: 1
+  charisma: 1
+  intelligence: 1
+  work_ethic: 1
+  moral_compass: 1
+  network: 1
+  user: one
+  congress: one
+
+two:
+  first_name: MyString
+  last_name: MyString
+  party: MyString
+  profession: MyString
+  avatar: MyString
+  is_currently_candidate: false
+  is_incumbent: MyString
+  current_coh: 1
+  charisma: 1
+  intelligence: 1
+  work_ethic: 1
+  moral_compass: 1
+  network: 1
+  user: two
+  congress: two

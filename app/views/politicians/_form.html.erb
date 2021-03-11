@@ -1,0 +1,27 @@
+
+<%= simple_form_for(@politician) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :first_name %>
+    <%= f.input :last_name %>
+    <%= f.input :party %>
+    <%= f.input :profession %>
+    <%= f.input :avatar %>
+    <%= f.input :is_currently_candidate %>
+    <%= f.input :is_incumbent %>
+    <%= f.input :current_coh %>
+    <%= f.input :charisma %>
+    <%= f.input :intelligence %>
+    <%= f.input :work_ethic %>
+    <%= f.input :moral_compass %>
+    <%= f.input :network %>
+    <%= f.association :user %>
+    <%= f.association :congress %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

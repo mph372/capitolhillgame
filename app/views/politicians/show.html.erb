@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @politician.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @politician.last_name %>
+</p>
+
+<p>
+  <strong>Party:</strong>
+  <%= @politician.party %>
+</p>
+
+<p>
+  <strong>Profession:</strong>
+  <%= @politician.profession %>
+</p>
+
+<p>
+  <strong>Avatar:</strong>
+  <%= @politician.avatar %>
+</p>
+
+<p>
+  <strong>Is currently candidate:</strong>
+  <%= @politician.is_currently_candidate %>
+</p>
+
+<p>
+  <strong>Is incumbent:</strong>
+  <%= @politician.is_incumbent %>
+</p>
+
+<p>
+  <strong>Current coh:</strong>
+  <%= @politician.current_coh %>
+</p>
+
+<p>
+  <strong>Charisma:</strong>
+  <%= @politician.charisma %>
+</p>
+
+<p>
+  <strong>Intelligence:</strong>
+  <%= @politician.intelligence %>
+</p>
+
+<p>
+  <strong>Work ethic:</strong>
+  <%= @politician.work_ethic %>
+</p>
+
+<p>
+  <strong>Moral compass:</strong>
+  <%= @politician.moral_compass %>
+</p>
+
+<p>
+  <strong>Network:</strong>
+  <%= @politician.network %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @politician.user_id %>
+</p>
+
+<p>
+  <strong>Congress:</strong>
+  <%= @politician.congress_id %>
+</p>
+
+<%= link_to 'Edit', edit_politician_path(@politician) %> |
+<%= link_to 'Back', politicians_path %>

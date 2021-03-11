@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_233745) do
+ActiveRecord::Schema.define(version: 2021_03_11_000828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,56 @@ ActiveRecord::Schema.define(version: 2021_03_10_233745) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "congresses", force: :cascade do |t|
+    t.integer "size"
+    t.integer "number_of_states"
+    t.boolean "include_senate"
+    t.boolean "include_campaigns"
+    t.boolean "include_money"
+    t.boolean "include_committees"
+    t.boolean "is_private"
+    t.boolean "includes_leadership"
+    t.integer "country_direction"
+    t.boolean "weeks_per_session"
+    t.string "length_of_week"
+    t.integer "bill_limit"
+    t.integer "contribution_limit"
+    t.boolean "interest_groups"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "politicians", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "party"
+    t.string "profession"
+    t.string "avatar"
+    t.boolean "is_currently_candidate"
+    t.string "is_incumbent"
+    t.integer "current_coh"
+    t.integer "charisma"
+    t.integer "intelligence"
+    t.integer "work_ethic"
+    t.integer "moral_compass"
+    t.integer "network"
+    t.bigint "user_id", null: false
+    t.bigint "congress_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["congress_id"], name: "index_politicians_on_congress_id"
+    t.index ["user_id"], name: "index_politicians_on_user_id"
+  end
+
+  create_table "user_congresses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "congress_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["congress_id"], name: "index_user_congresses_on_congress_id"
+    t.index ["user_id"], name: "index_user_congresses_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -68,4 +118,8 @@ ActiveRecord::Schema.define(version: 2021_03_10_233745) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "politicians", "congresses"
+  add_foreign_key "politicians", "users"
+  add_foreign_key "user_congresses", "congresses"
+  add_foreign_key "user_congresses", "users"
 end

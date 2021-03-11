@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Politicians</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Party</th>
+      <th>Profession</th>
+      <th>Avatar</th>
+      <th>Is currently candidate</th>
+      <th>Is incumbent</th>
+      <th>Current coh</th>
+      <th>Charisma</th>
+      <th>Intelligence</th>
+      <th>Work ethic</th>
+      <th>Moral compass</th>
+      <th>Network</th>
+      <th>User</th>
+      <th>Congress</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @politicians.each do |politician| %>
+      <tr>
+        <td><%= politician.first_name %></td>
+        <td><%= politician.last_name %></td>
+        <td><%= politician.party %></td>
+        <td><%= politician.profession %></td>
+        <td><%= politician.avatar %></td>
+        <td><%= politician.is_currently_candidate %></td>
+        <td><%= politician.is_incumbent %></td>
+        <td><%= politician.current_coh %></td>
+        <td><%= politician.charisma %></td>
+        <td><%= politician.intelligence %></td>
+        <td><%= politician.work_ethic %></td>
+        <td><%= politician.moral_compass %></td>
+        <td><%= politician.network %></td>
+        <td><%= politician.user_id %></td>
+        <td><%= politician.congress_id %></td>
+        <td><%= link_to 'Show', politician %></td>
+        <td><%= link_to 'Edit', edit_politician_path(politician) %></td>
+        <td><%= link_to 'Destroy', politician, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Politician', new_politician_path %>
