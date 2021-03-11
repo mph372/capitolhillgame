@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @congress.size %>
+</p>
+
+<p>
+  <strong>Number of states:</strong>
+  <%= @congress.number_of_states %>
+</p>
+
+<p>
+  <strong>Include senate:</strong>
+  <%= @congress.include_senate %>
+</p>
+
+<p>
+  <strong>Include campaigns:</strong>
+  <%= @congress.include_campaigns %>
+</p>
+
+<p>
+  <strong>Include money:</strong>
+  <%= @congress.include_money %>
+</p>
+
+<p>
+  <strong>Include committees:</strong>
+  <%= @congress.include_committees %>
+</p>
+
+<p>
+  <strong>Is private:</strong>
+  <%= @congress.is_private %>
+</p>
+
+<p>
+  <strong>Includes leadership:</strong>
+  <%= @congress.includes_leadership %>
+</p>
+
+<p>
+  <strong>Country direction:</strong>
+  <%= @congress.country_direction %>
+</p>
+
+<p>
+  <strong>Weeks per session:</strong>
+  <%= @congress.weeks_per_session %>
+</p>
+
+<p>
+  <strong>Length of week:</strong>
+  <%= @congress.length_of_week %>
+</p>
+
+<p>
+  <strong>Bill limit:</strong>
+  <%= @congress.bill_limit %>
+</p>
+
+<p>
+  <strong>Contribution limit:</strong>
+  <%= @congress.contribution_limit %>
+</p>
+
+<p>
+  <strong>Interest groups:</strong>
+  <%= @congress.interest_groups %>
+</p>
+
+<%= link_to 'Edit', edit_congress_path(@congress) %> |
+<%= link_to 'Back', congresses_path %>

@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Congresses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Number of states</th>
+      <th>Include senate</th>
+      <th>Include campaigns</th>
+      <th>Include money</th>
+      <th>Include committees</th>
+      <th>Is private</th>
+      <th>Includes leadership</th>
+      <th>Country direction</th>
+      <th>Weeks per session</th>
+      <th>Length of week</th>
+      <th>Bill limit</th>
+      <th>Contribution limit</th>
+      <th>Interest groups</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @congresses.each do |congress| %>
+      <tr>
+        <td><%= congress.size %></td>
+        <td><%= congress.number_of_states %></td>
+        <td><%= congress.include_senate %></td>
+        <td><%= congress.include_campaigns %></td>
+        <td><%= congress.include_money %></td>
+        <td><%= congress.include_committees %></td>
+        <td><%= congress.is_private %></td>
+        <td><%= congress.includes_leadership %></td>
+        <td><%= congress.country_direction %></td>
+        <td><%= congress.weeks_per_session %></td>
+        <td><%= congress.length_of_week %></td>
+        <td><%= congress.bill_limit %></td>
+        <td><%= congress.contribution_limit %></td>
+        <td><%= congress.interest_groups %></td>
+        <td><%= link_to 'Show', congress %></td>
+        <td><%= link_to 'Edit', edit_congress_path(congress) %></td>
+        <td><%= link_to 'Destroy', congress, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Congress', new_congress_path %>

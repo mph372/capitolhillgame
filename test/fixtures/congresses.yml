@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  size: 1
+  number_of_states: 1
+  include_senate: false
+  include_campaigns: false
+  include_money: false
+  include_committees: false
+  is_private: false
+  includes_leadership: false
+  country_direction: 1
+  weeks_per_session: false
+  length_of_week: MyString
+  bill_limit: 1
+  contribution_limit: 1
+  interest_groups: false
+
+two:
+  size: 1
+  number_of_states: 1
+  include_senate: false
+  include_campaigns: false
+  include_money: false
+  include_committees: false
+  is_private: false
+  includes_leadership: false
+  country_direction: 1
+  weeks_per_session: false
+  length_of_week: MyString
+  bill_limit: 1
+  contribution_limit: 1
+  interest_groups: false
