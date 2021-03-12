@@ -70,5 +70,14 @@
   <%= @congress.interest_groups %>
 </p>
 
+<p>
+  <strong>Owner</strong>
+  <%= @congress.owner.email %>
+</p>
+
+
+<% unless current_user.member?(@congress) %><%= link_to "Join this Congress", join_congress_path(@congress) %><%end%>
+
+
 <%= link_to 'Edit', edit_congress_path(@congress) %> |
 <%= link_to 'Back', congresses_path %>

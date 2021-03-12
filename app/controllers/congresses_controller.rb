@@ -19,6 +19,20 @@ class CongressesController < InheritedResources::Base
     end
   end  
 
+  def join
+    @congress = Congress.find(params[:id])
+    @m = @congress.memberships.build(:user_id => current_user.id)
+    respond_to do |format|
+      if @m.save
+        format.html { redirect_to(@congress, :notice => 'You have joined this Congress.') }
+        format.xml  { head :ok }
+      else
+        format.html { redirect_to(@congress, :notice => 'Join error.') }
+        format.xml  { render :xml => @congress.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
     def congress_params

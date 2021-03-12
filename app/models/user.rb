@@ -8,4 +8,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
+
+  def member?(congress)
+    memberships.find_by(congress: congress).present?
+  end         
 end
