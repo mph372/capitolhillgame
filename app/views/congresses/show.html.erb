@@ -74,9 +74,10 @@
   <strong>Owner</strong>
   <%= @congress.owner.email %>
 </p>
+<% @membership = current_user.memberships.find_by(congress_id: @congress.id) %>
+<% if current_user.member?(@congress) %><%= link_to "Leave this Congress", congress_membership_path(@congress, @membership), :method => :delete %>
+<% else current_user.member?(@congress) %><%= link_to "Join this Congress", join_congress_path(@congress) %><%end%>
 
-
-<% unless current_user.member?(@congress) %><%= link_to "Join this Congress", join_congress_path(@congress) %><%end%>
 
 
 <%= link_to 'Edit', edit_congress_path(@congress) %> |

@@ -11,5 +11,9 @@ class User < ApplicationRecord
 
   def member?(congress)
     memberships.find_by(congress: congress).present?
-  end         
+  end   
+  
+  def owner?(congress)
+    congress.owner_id == self.id
+  end  
 end

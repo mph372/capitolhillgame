@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :congresses do
     resources :memberships
     get 'join', :on => :member
+    get 'destroy', :on => :member
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

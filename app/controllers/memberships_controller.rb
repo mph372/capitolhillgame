@@ -11,13 +11,18 @@ class MembershipsController < ApplicationController
         flash[:notice] = "Not able to join Congress."
             redirect_to congress_url
         end
+    end
 
     def destroy
-        @membership = current_user.membership.find(params[:id])
-
+       
+        @membership = current_user.memberships.find(params[:id])
+        @membership.destroy
+    
         if @membership.destroy
-            redirect_to user_path(current_user)
+           flash[:notice] = "You left the Congress."
+        redirect_to congresses_path
+        else
         end
-    end 
+    end
 
 end
