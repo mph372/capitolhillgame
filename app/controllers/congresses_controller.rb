@@ -1,5 +1,24 @@
 class CongressesController < InheritedResources::Base
 
+  def show
+    @congress = Congress.find(params[:id])
+  end
+
+  def new
+    @congress = Congress.new(params[:id])
+  end
+
+  def create
+    @congress = current_user.owned_congresses.build(congress_params)
+    @congress.members << current_user
+
+    if @congress.save
+        redirect_to current_user
+    else
+        redirect_to new_congress_path
+    end
+  end  
+
   private
 
     def congress_params

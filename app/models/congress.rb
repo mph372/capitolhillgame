@@ -1,4 +1,5 @@
 class Congress < ApplicationRecord
-    has_many :user_congresses
-    has_many :users, through: :user_congresses
+    belongs_to :owner, class_name: "User"
+    has_many :memberships
+    has_many :members, through: :memberships, source: :user
 end

@@ -10,6 +10,15 @@
   </head>
 
   <body>
+    <div class="container">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <div class="row">
+      <%= link_to "Sign Up", new_user_registration_path %>
+      <%= link_to "Sign In", new_user_session_path %>
+    </div>
+    <%= current_user.email %>
     <%= yield %>
+    </div>
   </body>
 </html>
