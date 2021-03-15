@@ -26,7 +26,7 @@
   <tbody>
     <% @congresses.each do |congress| %>
       <tr>
-        <td><%= congress.size %></td>
+        <td><%= congress.members.count %>/<%= congress.size %></td>
         <td><%= congress.number_of_states %></td>
         <td><%= congress.include_senate %></td>
         <td><%= congress.include_campaigns %></td>
@@ -40,7 +40,7 @@
         <td><%= congress.bill_limit %></td>
         <td><%= congress.contribution_limit %></td>
         <td><%= congress.interest_groups %></td>
-        <td><%= link_to 'Show', congress %></td>
+        <td><%= link_to 'Show', congress, method: :get %></td>
         <td><%= link_to 'Edit', edit_congress_path(congress) %></td>
         <td><%= link_to 'Destroy', congress, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_190922) do
+ActiveRecord::Schema.define(version: 2021_03_15_205838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_190922) do
     t.boolean "is_private"
     t.boolean "includes_leadership"
     t.integer "country_direction"
-    t.boolean "weeks_per_session"
+    t.integer "weeks_per_session"
     t.string "length_of_week"
     t.integer "bill_limit"
     t.integer "contribution_limit"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2021_03_12_190922) do
     t.string "profession"
     t.string "avatar"
     t.boolean "is_currently_candidate"
-    t.string "is_incumbent"
+    t.boolean "is_incumbent"
     t.integer "current_coh"
     t.integer "charisma"
     t.integer "intelligence"
@@ -94,7 +94,9 @@ ActiveRecord::Schema.define(version: 2021_03_12_190922) do
     t.bigint "congress_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "membership_id"
     t.index ["congress_id"], name: "index_politicians_on_congress_id"
+    t.index ["membership_id"], name: "index_politicians_on_membership_id"
     t.index ["user_id"], name: "index_politicians_on_user_id"
   end
 
@@ -124,5 +126,6 @@ ActiveRecord::Schema.define(version: 2021_03_12_190922) do
   add_foreign_key "memberships", "congresses"
   add_foreign_key "memberships", "users"
   add_foreign_key "politicians", "congresses"
+  add_foreign_key "politicians", "memberships"
   add_foreign_key "politicians", "users"
 end

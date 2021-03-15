@@ -6,19 +6,19 @@
   <div class="form-inputs">
     <%= f.input :first_name %>
     <%= f.input :last_name %>
-    <%= f.input :party %>
+    <%= f.input :party, collection: ["Republican", "Democrat"] %>
     <%= f.input :profession %>
     <%= f.input :avatar %>
     <%= f.input :is_currently_candidate %>
-    <%= f.input :is_incumbent %>
+    <%= f.input :is_incumbent, as: :boolean %>
     <%= f.input :current_coh %>
     <%= f.input :charisma %>
     <%= f.input :intelligence %>
     <%= f.input :work_ethic %>
     <%= f.input :moral_compass %>
     <%= f.input :network %>
-    <%= f.association :user %>
-    <%= f.association :congress %>
+    <%= f.input :user_id, input_html: { value: params[:user_id] }, as: :hidden %>
+    <%= f.input :congress_id, input_html: { value: params[:congress_id] }, as: :hidden %>
   </div>
 
   <div class="form-actions">
