@@ -16,11 +16,32 @@ class CongressesController < InheritedResources::Base
     @congress = current_user.owned_congresses.build(congress_params)
     @congress.members << current_user
 
-    if @congress.save
-        redirect_to current_user
-    else
-        redirect_to new_congress_path
+    @states = []
+    num_of_states = @congress.number_of_states
+    num_of_states.times do |state|
+      @states << State.new
     end
+
+    Congress.transaction do
+      @congress.save!
+      @states.each do |state|
+        state.congress = @congress
+        state.save!
+      end
+
+      @states.each do |state|
+        state.generate_name
+      end
+
+      if @congress.save
+        redirect_to congresses_path
+      else
+        redirect_to new_congress_path
+      end
+    end
+
+
+    
   end  
 
   def join

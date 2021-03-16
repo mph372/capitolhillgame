@@ -4,8 +4,11 @@ class PoliticiansController < InheritedResources::Base
 
   def create
     @politician = Politician.new(politician_params)
+    @attribute = PoliticianAttribute.create
+    @attribute.politician = @politician
     @membership = Membership.all.find_by(congress_id: @politician.congress_id, user_id: @politician.user_id)
     @politician.membership_id = @membership.id
+
     
     respond_to do |format|
       if @politician.save

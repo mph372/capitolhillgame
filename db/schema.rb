@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_205838) do
+ActiveRecord::Schema.define(version: 2021_03_15_231404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,25 @@ ActiveRecord::Schema.define(version: 2021_03_15_205838) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "politician_attributes", force: :cascade do |t|
+    t.integer "name_id"
+    t.integer "district_connection"
+    t.integer "base_support"
+    t.integer "moderate_support"
+    t.integer "opposition_support"
+    t.integer "opposition_intensity"
+    t.integer "district_name_id"
+    t.integer "statewide_name_id"
+    t.integer "national_name_id"
+    t.integer "party_loyalty"
+    t.integer "power_score"
+    t.integer "credibility_score"
+    t.bigint "politician_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["politician_id"], name: "index_politician_attributes_on_politician_id"
+  end
+
   create_table "politicians", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -98,6 +117,21 @@ ActiveRecord::Schema.define(version: 2021_03_15_205838) do
     t.index ["congress_id"], name: "index_politicians_on_congress_id"
     t.index ["membership_id"], name: "index_politicians_on_membership_id"
     t.index ["user_id"], name: "index_politicians_on_user_id"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string "name"
+    t.integer "population"
+    t.string "region"
+    t.integer "military_population"
+    t.integer "median_age"
+    t.integer "median_income"
+    t.integer "government_workers"
+    t.integer "pvi"
+    t.bigint "congress_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["congress_id"], name: "index_states_on_congress_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -125,7 +159,9 @@ ActiveRecord::Schema.define(version: 2021_03_15_205838) do
   add_foreign_key "congresses", "users", column: "owner_id"
   add_foreign_key "memberships", "congresses"
   add_foreign_key "memberships", "users"
+  add_foreign_key "politician_attributes", "politicians"
   add_foreign_key "politicians", "congresses"
   add_foreign_key "politicians", "memberships"
   add_foreign_key "politicians", "users"
+  add_foreign_key "states", "congresses"
 end
