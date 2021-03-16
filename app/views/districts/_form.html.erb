@@ -1,0 +1,23 @@
+
+<%= simple_form_for(@district) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :population %>
+    <%= f.input :district_type %>
+    <%= f.input :region %>
+    <%= f.input :veteran_population %>
+    <%= f.input :median_age %>
+    <%= f.input :median_income %>
+    <%= f.input :government_workers %>
+    <%= f.input :pvi %>
+    <%= f.association :state %>
+    <%= f.association :congress %>
+    <%= f.association :politician %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

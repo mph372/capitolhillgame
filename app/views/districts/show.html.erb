@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Population:</strong>
+  <%= @district.population %>
+</p>
+
+<p>
+  <strong>District type:</strong>
+  <%= @district.district_type %>
+</p>
+
+<p>
+  <strong>Region:</strong>
+  <%= @district.region %>
+</p>
+
+<p>
+  <strong>Veteran population:</strong>
+  <%= @district.veteran_population %>
+</p>
+
+<p>
+  <strong>Median age:</strong>
+  <%= @district.median_age %>
+</p>
+
+<p>
+  <strong>Median income:</strong>
+  <%= @district.median_income %>
+</p>
+
+<p>
+  <strong>Government workers:</strong>
+  <%= @district.government_workers %>
+</p>
+
+<p>
+  <strong>Pvi:</strong>
+  <%= @district.pvi %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @district.state_id %>
+</p>
+
+<p>
+  <strong>Congress:</strong>
+  <%= @district.congress_id %>
+</p>
+
+<p>
+  <strong>Politician:</strong>
+  <%= @district.politician_id %>
+</p>
+
+<%= link_to 'Edit', edit_district_path(@district) %> |
+<%= link_to 'Back', districts_path %>

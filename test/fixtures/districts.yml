@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  population: 1
+  district_type: MyString
+  region: MyString
+  veteran_population: 1
+  median_age: 1
+  median_income: 1
+  government_workers: 1
+  pvi: 1
+  state: one
+  congress: one
+  politician: one
+
+two:
+  population: 1
+  district_type: MyString
+  region: MyString
+  veteran_population: 1
+  median_age: 1
+  median_income: 1
+  government_workers: 1
+  pvi: 1
+  state: two
+  congress: two
+  politician: two

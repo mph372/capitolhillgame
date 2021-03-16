@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_231404) do
+ActiveRecord::Schema.define(version: 2021_03_16_165933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,39 @@ ActiveRecord::Schema.define(version: 2021_03_15_231404) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "owner_id"
     t.index ["owner_id"], name: "index_congresses_on_owner_id"
+  end
+
+  create_table "districts", force: :cascade do |t|
+    t.integer "population"
+    t.integer "district_number"
+    t.string "district_type"
+    t.string "region"
+    t.integer "pop_per_sq_mile"
+    t.float "military_veteran_population"
+    t.integer "median_age"
+    t.float "percent_age_above_65"
+    t.float "percent_age_below_18"
+    t.float "percent_hs_grad"
+    t.float "percent_college_grad"
+    t.float "percent_graduate_grad"
+    t.integer "median_income"
+    t.float "poverty_rate"
+    t.float "sales_and_service"
+    t.float "government_workers_percent"
+    t.float "blue_collar_percent"
+    t.float "white_collar_percent"
+    t.integer "pvi"
+    t.string "top_industry_1"
+    t.string "top_industry_2"
+    t.string "top_industry_3"
+    t.bigint "state_id"
+    t.bigint "congress_id", null: false
+    t.bigint "politician_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["congress_id"], name: "index_districts_on_congress_id"
+    t.index ["politician_id"], name: "index_districts_on_politician_id"
+    t.index ["state_id"], name: "index_districts_on_state_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -131,6 +164,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_231404) do
     t.bigint "congress_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "number_of_districts"
     t.index ["congress_id"], name: "index_states_on_congress_id"
   end
 
@@ -157,6 +191,9 @@ ActiveRecord::Schema.define(version: 2021_03_15_231404) do
   end
 
   add_foreign_key "congresses", "users", column: "owner_id"
+  add_foreign_key "districts", "congresses"
+  add_foreign_key "districts", "politicians"
+  add_foreign_key "districts", "states"
   add_foreign_key "memberships", "congresses"
   add_foreign_key "memberships", "users"
   add_foreign_key "politician_attributes", "politicians"

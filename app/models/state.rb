@@ -1,5 +1,6 @@
 class State < ApplicationRecord
   belongs_to :congress
+  has_many :districts
 
   def generate_name
       @states_list = ["Calisota",
@@ -59,4 +60,13 @@ class State < ApplicationRecord
       end    
       update_attribute(:name, @state_name)
     end
-end
+
+    def generate_region
+      @regions = ["Pacific Northwest", "Southwest", "South", "Border Region", "Big Sky", "Plains States", "Midwest", "Northeast"]
+      @state_region = @regions.sample
+      update_attribute(:region, @state_region)
+    end
+
+
+
+  end

@@ -22,17 +22,30 @@ class CongressesController < InheritedResources::Base
       @states << State.new
     end
 
+    @districts = []
+    num_of_districts = @congress.size
+    num_of_districts.times do |district|
+      @districts << District.new
+    end
+
     Congress.transaction do
       @congress.save!
       @states.each do |state|
         state.congress = @congress
         state.save!
       end
-
+      @districts.each do |district|
+        district.congress = @congress
+        district.save!
+      end
+      @congress.assign_district_counts
+      @congress.assign_districts
+      
       @states.each do |state|
         state.generate_name
+        state.generate_region
       end
-
+      
       if @congress.save
         redirect_to congresses_path
       else
