@@ -55,6 +55,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'devise', '~> 4.7', '>= 4.7.3'
   gem 'activeadmin', '~> 2.9'
+  gem 'jquery-rails'
 
 
 

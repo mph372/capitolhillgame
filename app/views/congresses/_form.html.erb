@@ -4,8 +4,8 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :size %>
-    <%= f.input :number_of_states %>
+    <%= f.input :size, in: 3...435 %>
+    <%= f.input :number_of_states, in: 1...50 %>
     <%= f.input :include_senate %>
     <%= f.input :include_campaigns %>
     <%= f.input :include_money %>

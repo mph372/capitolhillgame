@@ -29,28 +29,27 @@ class CongressesController < InheritedResources::Base
     end
 
     Congress.transaction do
-      @congress.save!
-      @states.each do |state|
-        state.congress = @congress
-        state.save!
-      end
-      @districts.each do |district|
-        district.congress = @congress
-        district.save!
-      end
-      @congress.assign_district_counts
-      @congress.assign_districts
-      
-      @states.each do |state|
-        state.generate_name
-        state.generate_region
-      end
-      
+      @congress.save
       if @congress.save
         redirect_to congresses_path
+        @states.each do |state|
+          state.congress = @congress
+          state.save!
+        end
+        @districts.each do |district|
+          district.congress = @congress
+          district.save!
+        end
+        @states.each do |state|
+          state.generate_name
+          state.generate_region
+        end
+        @congress.assign_district_counts
+        @congress.assign_districts
       else
-        redirect_to new_congress_path
+        render 'new'
       end
+      
     end
 
 

@@ -77,8 +77,25 @@
 <% @membership = current_user.memberships.find_by(congress_id: @congress.id) %>
 <% if current_user.member?(@congress) %><%= link_to "Leave this Congress", congress_membership_path(@congress, @membership), :method => :delete %>
 <% else current_user.member?(@congress) %><%= link_to "Join this Congress", join_congress_path(@congress) %><%end%>
+<br>
+<%if @congress.states.present?%>
+<table class="table">
+  <thead>
+  <tr>
+    <th>State</th>
+    <th>Number of Districts</th>
+  </tr>
+  </thead>
 
-
-
+  <tbody>
+  <% @congress.states.each do |state| %>
+  <tr>
+    <td><%=state.name%></td>
+    <td><%=state.districts.count %></td>
+  </tr>
+    <%end%>
+  </tbody>
+</table>
+<%end%>
 <%= link_to 'Edit', edit_congress_path(@congress) %> |
 <%= link_to 'Back', congresses_path %>
