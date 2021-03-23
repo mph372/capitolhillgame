@@ -61,12 +61,25 @@ class State < ApplicationRecord
       update_attribute(:name, @state_name)
     end
 
-    def generate_region
+  def generate_region
       @regions = ["Pacific Northwest", "Southwest", "South", "Border Region", "Big Sky", "Plains States", "Midwest", "Northeast"]
       @state_region = @regions.sample
       update_attribute(:region, @state_region)
-    end
-
-
-
   end
+
+  def true_pvi
+    if pvi.present?
+      if pvi > 0
+        "R+#{pvi}"
+      elsif pvi < 0
+        "D+#{pvi*-1}"
+      elsif pvi == 0
+        "EVEN"
+      end
+    end
+  end
+
+
+ end
+
+  

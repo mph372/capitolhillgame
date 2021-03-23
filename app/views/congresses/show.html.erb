@@ -71,6 +71,36 @@
 </p>
 
 <p>
+  <strong>GOP Districts:</strong>
+  <%= @congress.districts.where("pvi >= ?", 8).count %>
+</p>
+
+<p>
+  <strong>DEM Districts:</strong>
+  <%=  @congress.districts.where("pvi < ?", 0).count  %>
+</p>
+
+<p>
+  <strong>Swing Districts:</strong>
+  <%=  @congress.districts.where("pvi BETWEEN ? AND ?", 0, 7).count  %>
+</p>
+
+<p>
+  <strong>GOP States:</strong>
+  <%= @congress.states.where("pvi >= ?", 8).count %>
+</p>
+
+<p>
+  <strong>DEM States:</strong>
+  <%=  @congress.states.where("pvi < ?", 0).count  %>
+</p>
+
+<p>
+  <strong>Swing States:</strong>
+  <%=  @congress.states.where("pvi BETWEEN ? AND ?", 0, 7).count  %>
+</p>
+
+<p>
   <strong>Owner</strong>
   <%= @congress.owner.email %>
 </p>
@@ -84,6 +114,8 @@
   <tr>
     <th>State</th>
     <th>Number of Districts</th>
+    <th>PVI</th>
+    <th>Population</th>
   </tr>
   </thead>
 
@@ -92,10 +124,39 @@
   <tr>
     <td><%=state.name%></td>
     <td><%=state.districts.count %></td>
+    <td><%=state.true_pvi %></td>
+    <td><%= number_with_delimiter(state.population, :delimiter => ',')%></td>
   </tr>
     <%end%>
   </tbody>
 </table>
 <%end%>
+
+<%if @congress.districts.present?%>
+<table class="table">
+  <thead>
+  <tr>
+    <th>District Number</th>
+    <th>ID</th>
+    <th>PVI</th>
+    <th>Population</th>
+    <th>Population Density</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @congress.districts.each do |district| %>
+  <tr>
+    <td><%=district.state.name%> - <%=district.district_display%></td>
+    <td><%= district.id %></td>
+    <td><%=district.true_pvi%></td>
+    <td><%= number_with_delimiter(district.population, :delimiter => ',')%></td>
+    <td><%= number_with_precision(district.pop_per_sq_mile.to_f, :precision => 2)  %></td>
+  </tr>
+    <%end%>
+  </tbody>
+</table>
+<%end%>
+
 <%= link_to 'Edit', edit_congress_path(@congress) %> |
 <%= link_to 'Back', congresses_path %>

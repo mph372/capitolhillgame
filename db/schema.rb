@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_165933) do
+ActiveRecord::Schema.define(version: 2021_03_22_193550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_165933) do
     t.integer "district_number"
     t.string "district_type"
     t.string "region"
-    t.integer "pop_per_sq_mile"
+    t.float "pop_per_sq_mile"
     t.float "military_veteran_population"
     t.integer "median_age"
     t.float "percent_age_above_65"

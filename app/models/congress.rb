@@ -19,29 +19,45 @@ class Congress < ApplicationRecord
         errors[:base] << "There cannot be more states than districts." unless size > number_of_states
     end
 
+
     def assign_district_counts
-       @number_of_states = number_of_states
-       @number_of_districts = size
-        
+        @number_of_states = number_of_states
+        @number_of_districts = size
         @numbers = []
-        @loose_pcc = @number_of_districts / @number_of_states
+
+       
         $i = 1
         while $i < @number_of_states do
-            @ten_pcc = @loose_pcc * 0.5
-            @rand_num = rand( (@loose_pcc - @ten_pcc)..(@loose_pcc + @ten_pcc) )
+            random = rand(1..@number_of_districts)
+            @numbers << random
             $i += 1
-           @numbers << @rand_num.round
-       end
+        end
 
-       @numbers_total = @numbers.inject(:+)
-       @numbers << (@number_of_districts - @numbers_total).round
+        @final_numbers = []
+        @numbers.push(1,@number_of_districts)
+        @numbers.sort!
+        @numbers.each_index do |i|
+            next if i == 0
+            difference = (@numbers[i] - @numbers[i-1])
+            @final_numbers << difference
+        end
+        @final_numbers.map! {|number| number == 0 ? 1 : number}
+        if @final_numbers.inject(:+) > @number_of_districts
+            max = @final_numbers.max
+            difference = @final_numbers.inject(:+) - @number_of_districts
+            max_subtractor = max - difference
+            @final_numbers.map! {|number| number == max ? max_subtractor : number}
+        end
+
+    
 
         states.each do |state|
-           @array_number = rand(@numbers.length)
-           @district_count = @numbers[@array_number]
-           state.update_attribute(:number_of_districts, @district_count)
-           @numbers.delete_at(@district_count)
+            @array_number = rand(@final_numbers.length)
+            @district_count = @final_numbers[@array_number]
+            state.update_attribute(:number_of_districts, @district_count)
+            @final_numbers.delete_at(@array_number)
         end
+
     end
 
     def assign_districts
@@ -49,16 +65,52 @@ class Congress < ApplicationRecord
         @districts = districts
         
         @states.each do |state|
-            $i = 1
-            while $i < state.number_of_districts do
-                @districts_to_be_edited = @districts.where("state_id IS NULL").limit(state.number_of_districts)
+            @districts_to_be_edited = @districts.where("state_id IS NULL").limit(state.number_of_districts)
                     @districts_to_be_edited.each do |district|
-                        district.update_attribute(:state, state)
-                    $i += 1    
-                    end 
+                    district.update_attribute(:state, state)
+                    end       
             end
-        end
-        
     end
 
+    def assign_district_numbers
+        @states = states
+        @districts = districts
+
+        @states.each do |state|  
+            district_number = 1
+            state.districts.each do |district|
+                district.update_attribute(:district_number, district_number)
+                district_number += 1
+            end 
+        end
+    end 
+
+    def calculate_state_pvi
+        states.each do |state|
+            @districts_pvi = []
+            state.districts.each do |district|
+            @districts_pvi << district.pvi
+            
+            end
+            print @districts_pvi
+            numerator = @districts_pvi.reduce(0) { |a, v| a + v }
+            denominator = @districts_pvi.count
+            pvi_average = numerator.to_f / denominator.to_f 
+            pvi_average 
+            state.update_attribute(:pvi, pvi_average)
+        end
+    end
+
+    def calculate_state_population
+        states.each do |state|
+            @districts_population = []
+            state.districts.each do |district|
+                @districts_population << district.population
+            
+            end
+            population_total = @districts_population.inject(:+)
+            state.update_attribute(:population, population_total)
+        end
+    end
+    
 end
