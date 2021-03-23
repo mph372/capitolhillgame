@@ -112,5 +112,40 @@ class Congress < ApplicationRecord
             state.update_attribute(:population, population_total)
         end
     end
+
+    def calculate_state_density
+        states.each do |state|
+            @districts_density = []
+            state.districts.each do |district|
+            @districts_density << district.pop_per_sq_mile
+            
+            end
+            print @districts_pvi
+            numerator = @districts_density.reduce(0) { |a, v| a + v }
+            denominator = @districts_density.count
+            density_average = numerator.to_f / denominator.to_f 
+            density_average 
+            state.update_attribute(:population_density, density_average)
+        end
+    end
+
+    def calculate_state_ethnicity
+        states.each do |state|
+            @districts_latino = []
+            state.districts.each do |district|
+            @districts_latino << district.latino_population
+            
+            end
+
+            numerator = @districts_latino.reduce(0) { |a, v| a + v }
+            denominator = @districts_latino.count
+            latino_average = numerator.to_f / denominator.to_f 
+            latino_average 
+            state.update_attribute(:latino_population, latino_average)
+        end
+    end
+
+
+    
     
 end

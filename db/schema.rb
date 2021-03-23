@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_193550) do
+ActiveRecord::Schema.define(version: 2021_03_23_201730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,11 @@ ActiveRecord::Schema.define(version: 2021_03_22_193550) do
     t.bigint "politician_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "white_population"
+    t.float "latino_population"
+    t.float "black_population"
+    t.float "asian_population"
+    t.float "other_population"
     t.index ["congress_id"], name: "index_districts_on_congress_id"
     t.index ["politician_id"], name: "index_districts_on_politician_id"
     t.index ["state_id"], name: "index_districts_on_state_id"
@@ -165,6 +170,12 @@ ActiveRecord::Schema.define(version: 2021_03_22_193550) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "number_of_districts"
+    t.float "population_density"
+    t.float "white_population"
+    t.float "latino_population"
+    t.float "black_population"
+    t.float "asian_population"
+    t.float "other_population"
     t.index ["congress_id"], name: "index_states_on_congress_id"
   end
 

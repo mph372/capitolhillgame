@@ -62,9 +62,33 @@ class State < ApplicationRecord
     end
 
   def generate_region
-      @regions = ["Pacific Northwest", "Southwest", "South", "Border Region", "Big Sky", "Plains States", "Midwest", "Northeast"]
-      @state_region = @regions.sample
-      update_attribute(:region, @state_region)
+    number_of_border_states = (congress.number_of_states * 0.16).round
+    @border_states = []
+    congress.states.order("latino_population desc").limit(number_of_border_states).each do |state|
+      @border_states << state
+    end
+    print @border_states
+      if @border_states.include?(self)
+        state_region = "Border Region"
+      elsif number_of_districts == 1 && pvi > 0
+        random = rand(1..2)
+        if random == 1
+        state_region = "Big Sky"
+        elsif random == 2
+        state_region = "Plains"
+        end
+      elsif number_of_districts == 1  && pvi <= 0
+        state_region = "Northeast"
+      elsif pvi >= 12
+        state_region = "South"
+      elsif pvi <= -8
+        state_region = ["Pacific Coast", "Northeast"].sample
+      elsif pvi.between?(7,11)
+        state_region = "Coastal Southeast"
+      else
+        state_region = ["Appalachia", "Midwest", "Rust Belt"].sample
+      end
+      update_attribute(:region, state_region)  
   end
 
   def true_pvi

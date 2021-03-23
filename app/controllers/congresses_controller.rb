@@ -40,19 +40,23 @@ class CongressesController < InheritedResources::Base
           district.congress = @congress
           district.generate_pvi
           district.generate_density
-          district.pop_density_revise
           district.generate_population
+          district.generate_ethnicities
           district.save!
         end
-        @states.each do |state|
-          state.generate_name
-          state.generate_region
-        end
+
         @congress.assign_district_counts
         @congress.assign_districts
         @congress.assign_district_numbers
         @congress.calculate_state_pvi
         @congress.calculate_state_population
+        @congress.calculate_state_density
+
+        @states.each do |state|
+          state.generate_name
+          state.generate_region
+        end
+
       else
         render 'new'
       end
