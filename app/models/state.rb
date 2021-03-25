@@ -60,24 +60,26 @@ class State < ApplicationRecord
       end    
       update_attribute(:name, @state_name)
     end
+    
 
-  def generate_region
+  
+    def generate_region
     number_of_border_states = (congress.number_of_states * 0.16).round
     @border_states = []
     congress.states.order("latino_population desc").limit(number_of_border_states).each do |state|
       @border_states << state
     end
-    print @border_states
       if @border_states.include?(self)
-        state_region = "Border Region"
+        state_region = "Southwest"
       elsif number_of_districts == 1 && pvi > 0
         random = rand(1..2)
         if random == 1
         state_region = "Big Sky"
         elsif random == 2
         state_region = "Plains"
+        else
         end
-      elsif number_of_districts == 1  && pvi <= 0
+      elsif number_of_districts == 1 && pvi <= 0
         state_region = "Northeast"
       elsif pvi >= 12
         state_region = "South"
@@ -103,7 +105,11 @@ class State < ApplicationRecord
     end
   end
 
+  
+    
+end
 
- end
+
+
 
   

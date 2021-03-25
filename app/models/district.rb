@@ -148,9 +148,19 @@ class District < ApplicationRecord
       population = rand(829296..929295)
     end
     update_attribute(:population, population)
+
   end
 
-  
+  def generate_geography_type
+    if pop_per_sq_mile < 75
+      geography_type = "Rural"
+    elsif pop_per_sq_mile.between?(75,1800)
+      geography_type = "Suburban"
+    elsif pop_per_sq_mile > 1800
+      geography_type = "Urban"
+    end
+    update_attribute(:geography_type, geography_type)
+  end
 
     def generate_white_population
       random = rand(0.00..1.00).round(2)
@@ -467,6 +477,262 @@ class District < ApplicationRecord
          income = rand(140000..150000)
     end
     update_attribute(:median_income, income)
+  end
+
+
+
+  def generate_military_base
+    if pop_per_sq_mile < 1000
+      random = rand(1..6)
+      if random == 2
+        military_base = true
+        random_name = rand(1..100)
+          if region == "Northeast" || region == "Coastal Southeast" || region == "Pacific Coast" 
+            if random_name.between?(1,70)
+              base_type = "Navy"
+            elsif
+              random_name > 70
+              base_type = "Marines"
+            end
+          else
+          if random_name.between?(1,50)
+            base_type = "Army"
+          elsif random_name.between?(51,100)
+            base_type = "Air Force"
+          end
+        end
+        update_attribute(:military_base_type, base_type)
+        save 
+      else
+      end
+    end
+  end
+
+  def generate_gun_owners
+    
+    if geography_type == "Urban"
+      gun_owners = rand((19*0.75)..(19*1.2))
+    elsif geography_type == "Suburban"
+      gun_owners = rand((28*0.8)..(28*1.25))
+    elsif geography_type == "Rural"
+      gun_owners = rand((46*0.8)..(46*1.25))
+    end
+    update_attribute(:gun_owners, gun_owners)
+  end
+
+  def generate_seniors
+    random = rand(0.00..1.00)
+      if random.between?(0.00,0.0114942528735632) 
+        seniors = rand(8.45374356680538..9.44496502610697)
+      elsif random.between?(0.0114942528735632,0.160919540229885) 
+        seniors = rand(9.44496502610697..12.9960740967562)
+      elsif random.between?(0.160919540229885,0.517241379310345) 
+        seniors = rand(12.9960740967562..16.5471831674055)
+      elsif random.between?(0.517241379310345,0.885057471264368) 
+        seniors = rand(16.5471831674055..20.0982922380547)
+      elsif random.between?(0.885057471264368,0.972413793103448) 
+        seniors = rand(20.0982922380547..23.649401308704)
+      elsif random.between?(0.972413793103448,1) 
+        seniors = rand(23.649401308704..37.477370891095)
+      end
+      update_attribute(:percent_age_above_65, seniors)
+  end
+
+  def generate_union_membership
+    random = rand(0.00..1.00)
+    if pvi < -17
+      union = rand(12.44..(16.44+4))
+    elsif pvi.between?(-17,-7)
+      union = rand((10.72-4.45)..(10.72+4.45))
+    elsif pvi.between?(-6,8)
+      union = rand((7.84-4.2)..(7.84+4.2))
+    elsif pvi > 8
+      union = rand((6.52-2.2)..(6.52+2.2))
+    end
+    update_attribute(:union_membership, union)
+  end
+
+
+GENERAL_INDUSTRIES = ['Insurance', 
+                          'Tourism',  
+                          'Real Estate', 
+                          'Defense Manufacturing', 
+                          'Construction', 
+                          'Arts & Entertainment', 
+                          'Beer Manufacturing', 
+                          'Pharmaceutical Research', 
+                          'Healthcare', 
+                          'Healthcare',
+                          'Healthcare',
+                          'Higher Education',
+                          'Higher Education', 
+                          'Higher Education',
+                          'Liquor Manufacturing', 
+                          'Aerospace Manufacturing',  
+                          'Transportation', 
+                          'Telecom Services', 
+                          'Textile Manufacturing',
+                          'Banking']
+                          
+        URBAN =             ['Insurance', 
+                            'Tourism',  
+                            'Real Estate', 
+                            
+                            'Construction', 
+                            'Arts & Entertainment', 
+                            
+                            'Pharmaceutical Research', 
+                            'Healthcare', 
+                            'Healthcare',
+                            'Healthcare',
+                            'Higher Education',
+                            'Higher Education', 
+                            'Higher Education',
+                            
+                            'Aerospace Manufacturing',  
+                            'Transportation', 
+                            'Telecom Services', 
+                            
+                            'Banking']                          
+
+BIGSKYREGIONS =            ['Logging', 
+                            'Oil Extraction', 
+                            'Natural Gas Extraction', 
+                            'Copper Mining', 
+                            'Silver Mining', 
+                            'Wind Turbine Manufacturing', 
+                            'Gold Mining',
+                            'Cattle Agriculture', 
+                            'Mineral Mining']
+
+RUSTBELT =                   ['Auto Manufacturing', 
+                            'Chemical Manufacturing', 
+                            'Natural Gas Extraction', 
+                            'Steel Manufacturing', 
+                            'Natural Gas Extraction', 
+                            'Oil Extraction',
+                            'Coal Mining', 
+                            'Lumber Manufacturing'] 
+
+RURALPLAINS =             ['Poultry Agriculture', 
+                          'Corn Agriculture', 
+                          'Soybean Agriculture', 
+                          'Pork Agriculture', 
+                          'Cotton Agriculture', 
+                          'Wheat Farming', 
+                          'Oil Extraction', 
+                          'Construction', 
+                          'Textile Manufacturing', 
+                          'Cattle Agriculture',
+                          'Fruit Agriculture', 
+                          'Dairy Agriculture'
+                        ]   
+                          
+COASTALSOUTH =             ['Auto Manufacturing', 
+                            'Aerospace Manufacturing', 
+                            'Cotton Agriculture', 
+                            'Sugarcane Agriculture', 
+                            'Ship Manufacturing', 
+                            'Wind Turbine Manufacturing',
+                            'Fishing', 
+                            'Tobacco Agriculture']  
+                            
+PACIFICCOAST =            ['Wind Turbine Manufacturing', 
+                          'Information Technology', 
+                          'Technology Equipment Manufacturing', 
+                          'Logging', 
+                          'Oil Extraction', 
+                          'Wineries',
+                          'Ship Manufacturing', 
+                          'Fishing']   
+                          
+WEALTHY =                 ['Information Technology', 
+                          'Financial Services', 
+                          'Biotechnology', 
+                          'Aerospace Manufacturing', 
+                          'Medical Research', 
+                          'Entertainment']  
+                          
+MIDWEST =                   ['Ethanol Manufacturing',
+                          'Construction', 
+                          'Textile Manufacturing',
+                          'Oil Extraction', 
+                          'Natural Gas Extraction',
+                          'Healthcare',
+                          'Healthcare',
+                          'Higher Education',
+                          'Higher Education', 
+                          'Poultry Agriculture', 
+                          'Corn Agriculture', 
+                          'Soybean Agriculture', 
+                          'Pork Agriculture',  
+                            ]   
+                            
+SOUTHWEST =              ['Avocado Agriculture',
+                          'Sheep Agriculture',
+                        'Cattle Agriculture',
+                            'Fruit Agriculture']              
+
+  def generate_industry_1
+    if median_income > 100000 && region != "Rural"
+      combined_regions = WEALTHY
+      combined_regions.uniq
+      array_number = rand(combined_regions.length)
+      top_industry = combined_regions[array_number]
+      update_attribute(:top_industry_1, top_industry)
+    elsif geography_type == "Urban"
+      combined_regions = URBAN
+      array_number = rand(combined_regions.length)
+      top_industry = combined_regions[array_number]
+      update_attribute(:top_industry_1, top_industry)  
+    elsif region == "Big Sky" || region == "Rocky Mountain"
+      combined_regions = GENERAL_INDUSTRIES + BIGSKYREGIONS
+      combined_regions.uniq
+      array_number = rand(combined_regions.length)
+      top_industry = combined_regions[array_number]
+      update_attribute(:top_industry_1, top_industry)
+    elsif region == "Rust Belt" && geography_type != "Urban"
+      combined_regions = GENERAL_INDUSTRIES + RUSTBELT
+      combined_regions.uniq
+      array_number = rand(combined_regions.length)
+      top_industry = combined_regions[array_number]
+      update_attribute(:top_industry_1, top_industry)
+    elsif region == "Coastal Southeast"
+      combined_regions = GENERAL_INDUSTRIES + COASTALSOUTH
+      combined_regions.uniq
+      array_number = rand(combined_regions.length)
+      top_industry = combined_regions[array_number]
+      update_attribute(:top_industry_1, top_industry)
+    elsif region == "Pacific Coast"  
+      combined_regions = GENERAL_INDUSTRIES + PACIFICCOAST
+      combined_regions.uniq
+      array_number = rand(combined_regions.length)
+      top_industry = combined_regions[array_number]
+      update_attribute(:top_industry_1, top_industry)
+    elsif region == "Midwest"
+        combined_regions = MIDWEST
+        combined_regions.uniq
+        array_number = rand(combined_regions.length)
+        top_industry = combined_regions[array_number]
+        update_attribute(:top_industry_1, top_industry)
+    elsif region == "Plains" || geography_type == "Rural"
+        combined_regions = RURALPLAINS
+        combined_regions.uniq
+        array_number = rand(combined_regions.length)
+        top_industry = combined_regions[array_number]
+        update_attribute(:top_industry_1, top_industry)
+      elsif region == "Southwest" 
+        combined_regions = GENERAL_INDUSTRIES + SOUTHWEST
+        combined_regions.uniq
+        array_number = rand(combined_regions.length)
+        top_industry = combined_regions[array_number]
+        update_attribute(:top_industry_1, top_industry)
+      else
+        combined_regions = GENERAL_INDUSTRIES
+        array_number = rand(combined_regions.length)
+        top_industry = combined_regions[array_number]
+        update_attribute(:top_industry_1, top_industry)        
+    end
   end
 
 end

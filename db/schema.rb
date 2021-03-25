@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_201730) do
+ActiveRecord::Schema.define(version: 2021_03_25_165818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,12 @@ ActiveRecord::Schema.define(version: 2021_03_23_201730) do
     t.float "black_population"
     t.float "asian_population"
     t.float "other_population"
+    t.boolean "military_base"
+    t.string "military_base_type"
+    t.string "military_base_name"
+    t.string "geography_type"
+    t.float "gun_owners"
+    t.float "union_membership"
     t.index ["congress_id"], name: "index_districts_on_congress_id"
     t.index ["politician_id"], name: "index_districts_on_politician_id"
     t.index ["state_id"], name: "index_districts_on_state_id"
@@ -176,6 +182,8 @@ ActiveRecord::Schema.define(version: 2021_03_23_201730) do
     t.float "black_population"
     t.float "asian_population"
     t.float "other_population"
+    t.float "gun_owners"
+    t.float "union_members"
     t.index ["congress_id"], name: "index_states_on_congress_id"
   end
 

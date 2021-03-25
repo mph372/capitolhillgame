@@ -30,41 +30,61 @@ class CongressesController < InheritedResources::Base
 
     Congress.transaction do
       @congress.save
-      if @congress.save
-        redirect_to congresses_path
         @states.each do |state|
           state.congress = @congress
-          state.save!
+          state.generate_name
         end
+
         @districts.each do |district|
           district.congress = @congress
           district.generate_pvi
           district.generate_density
           district.generate_population
           district.generate_ethnicities
-          district.save!
         end
+
+        @congress.reload
 
         @congress.assign_district_counts
         @congress.assign_districts
         @congress.assign_district_numbers
+        
+        @districts.each do |district|
+         
+          
+          district.generate_military_base
+          district.generate_geography_type
+          district.generate_gun_owners
+          district.generate_union_membership
+          district.generate_income
+          district.generate_seniors
+          
+        end
+
+        @congress.reload
+
         @congress.calculate_state_pvi
         @congress.calculate_state_population
         @congress.calculate_state_density
+        @congress.calculate_state_ethnicity
+        @congress.generate_state_region
 
-        @states.each do |state|
-          state.generate_name
-          state.generate_region
-        end
+        @congress.calculate_state_union_membership
+        @congress.calculate_state_gun_owners
+        @congress.generate_district_regions
+        @congress.generate_district_industry
 
+        
+
+
+       
+      
+      if @congress.save
+        redirect_to congresses_path
       else
         render 'new'
       end
-      
-    end
-
-
-    
+    end 
   end  
 
   def join

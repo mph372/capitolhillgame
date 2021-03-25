@@ -101,6 +101,21 @@
 </p>
 
 <p>
+  <strong>Urban Districts:</strong>
+  <%= @congress.districts.where("geography_type = ?", "Urban").count %>
+</p>
+
+<p>
+   <strong>Suburban Districts:</strong>
+  <%= @congress.districts.where("geography_type = ?", "Suburban").count %>
+</p>
+
+<p>
+    <strong>Rural Districts:</strong>
+  <%= @congress.districts.where("geography_type = ?", "Rural").count %>
+</p>
+
+<p>
   <strong>Owner</strong>
   <%= @congress.owner.email %>
 </p>
@@ -117,8 +132,14 @@
     <th>Region</th>
     <th>PVI</th>
     <th>Population</th>
-    <th>Latino Population</th>
+    <th>White</th>
+    <th>Latino </th>
+    <th>Black</th>
+    <th>Asian</th>
+    <th>Other</th>
     <th>Density</th>
+    <th>Gun Owners</th>
+    <th>Union Membership</th>
   </tr>
   </thead>
 
@@ -130,8 +151,14 @@
     <td><%=state.region%></td>
     <td><%=state.true_pvi %></td>
     <td><%= number_with_delimiter(state.population, :delimiter => ',')%></td>
+    <td><%= number_with_precision(state.white_population, :precision => 2)%>%</td>
     <td><%= number_with_precision(state.latino_population, :precision => 2)%>%</td>
+    <td><%= number_with_precision(state.black_population, :precision => 2)%>%</td>
+    <td><%= number_with_precision(state.asian_population, :precision => 2)%>%</td>
+    <td><%= number_with_precision(state.other_population, :precision => 2)%>%</td>
     <td><%= number_with_precision(state.population_density.to_f, :precision => 2)  %></td>
+    <td><%= number_with_precision(state.gun_owners.to_f, :precision => 2)  %>%</td>
+    <td><%= number_with_precision(state.union_members.to_f, :precision => 2)  %>%</td>
   </tr>
     <%end%>
   </tbody>
@@ -143,33 +170,31 @@
   <thead>
   <tr>
     <th>District Number</th>
-    <th>ID</th>
+    <th>Type</th>
     <th>PVI</th>
     <th>Median Income</th>
     <th>Population</th>
     <th>Population Density</th>
-    <th>White Population</th>
-    <th>Latino Population</th>
-    <th>Black Population</th>
-    <th>Asian Population</th>
-    <th>Other Population</th>
+    <th>Gun Owners</th>
+    <th>Seniors</th>
+    <th>Union Membership</th>
+    <th>Top Industry</th>
   </tr>
   </thead>
 
   <tbody>
   <% @congress.districts.each do |district| %>
   <tr>
-    <td><%=district.state.name%> - <%=district.district_display%></td>
-    <td><%= district.id %></td>
+    <td><%=district.state.name%> - <%=district.district_display%><%if district.military_base?%>*<br><small><%= district.military_base_type %></small><%end%></td>
+    <td><%= district.geography_type %><br><small><%= district.region %></small></td>
     <td><%=district.true_pvi%></td>
     <td>$<%= number_with_delimiter(district.median_income, :delimiter => ',')%></td>
     <td><%= number_with_delimiter(district.population, :delimiter => ',')%></td>
     <td><%= number_with_precision(district.pop_per_sq_mile.to_f, :precision => 2)  %></td>
-    <td><%= number_with_precision(district.white_population, :precision => 2) %>%</td>
-    <td><%= number_with_precision(district.latino_population, :precision => 2) %>%</td>
-    <td><%= number_with_precision(district.black_population, :precision => 2) %>%</td>
-    <td><%= number_with_precision(district.asian_population, :precision => 2) %>%</td>
-    <td><%= number_with_precision(district.other_population, :precision => 2) %>%</td>
+    <td><%= number_with_precision(district.gun_owners.to_f, :precision => 2)  %>%</td>
+    <td><%= number_with_precision(district.percent_age_above_65, :precision => 2) %>%</td>
+    <td><%= number_with_precision(district.union_membership, :precision => 2) %>%</td>
+    <td><%= district.top_industry_1 %></td>
   </tr>
     <%end%>
   </tbody>
