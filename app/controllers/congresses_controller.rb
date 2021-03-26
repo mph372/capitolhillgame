@@ -66,7 +66,7 @@ class CongressesController < InheritedResources::Base
         @congress.calculate_state_pvi
         @congress.calculate_state_population
         @congress.calculate_state_density
-        @congress.calculate_state_ethnicity
+        @congress.calculate_state_ethnicities
         @congress.generate_state_region
 
         @congress.calculate_state_union_membership

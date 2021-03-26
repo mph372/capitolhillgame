@@ -71,8 +71,8 @@
 </p>
 
 <p>
-  <strong>Congress:</strong>
-  <%= @politician.congress_id %>
+  <strong>View Congress:</strong>
+  <%= link_to "View Congress", @politician.congress %>
 </p>
 
 <%= link_to 'Edit', edit_politician_path(@politician) %> |

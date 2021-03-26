@@ -185,6 +185,7 @@
   <tbody>
   <% @congress.districts.each do |district| %>
   <tr>
+    <td><%if district.politician == nil && current_user.politicians.where(congress_id: @congress.id).blank?  %><%= link_to "Claim District", join_district_path(district) %><%end%></td>
     <td><%=district.state.name%> - <%=district.district_display%><%if district.military_base?%>*<br><small><%= district.military_base_type %></small><%end%></td>
     <td><%= district.geography_type %><br><small><%= district.region %></small></td>
     <td><%=district.true_pvi%></td>

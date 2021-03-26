@@ -15,25 +15,13 @@
   <%= @district.region %>
 </p>
 
-<p>
-  <strong>Veteran population:</strong>
-  <%= @district.veteran_population %>
-</p>
-
-<p>
-  <strong>Median age:</strong>
-  <%= @district.median_age %>
-</p>
 
 <p>
   <strong>Median income:</strong>
   <%= @district.median_income %>
 </p>
 
-<p>
-  <strong>Government workers:</strong>
-  <%= @district.government_workers %>
-</p>
+
 
 <p>
   <strong>Pvi:</strong>
@@ -47,12 +35,12 @@
 
 <p>
   <strong>Congress:</strong>
-  <%= @district.congress_id %>
+  <%= link_to "View Congress", @district.congress %>
 </p>
 
 <p>
   <strong>Politician:</strong>
-  <%= @district.politician_id %>
+  <%= "#{@district.politician.first_name} #{@district.politician.last_name}" %>
 </p>
 
 <%= link_to 'Edit', edit_district_path(@district) %> |

@@ -9,14 +9,12 @@
     <%= f.input :party, collection: ["Republican", "Democrat"] %>
     <%= f.input :profession %>
     <%= f.input :avatar %>
-    <%= f.input :is_currently_candidate %>
-    <%= f.input :is_incumbent, as: :boolean %>
-    <%= f.input :current_coh %>
-    <%= f.input :charisma %>
-    <%= f.input :intelligence %>
-    <%= f.input :work_ethic %>
-    <%= f.input :moral_compass %>
-    <%= f.input :network %>
+    <%= f.input :charisma, input_html: { type: 'range', class: 'slider', id: "charismaSlider" }  %> <p>Value: <span id="charismaValue"></span></p>
+    <%= f.input :intelligence, input_html: { type: 'range', class: 'slider', id: "intelligenceSlider" }  %> <p>Value: <span id="intelligenceValue"></span></p>
+    <%= f.input :work_ethic, input_html: { type: 'range', class: 'slider', id: "work_ethicSlider" }  %> <p>Value: <span id="work_ethicValue"></span></p>
+    <%= f.input :moral_compass, input_html: { type: 'range', class: 'slider', id: "moral_compassSlider" }  %> <p>Value: <span id="moral_compassValue"></span></p>
+    <%= f.input :network, input_html: { type: 'range', class: 'slider', id: "networkSlider" }  %> <p>Value: <span id="networkValue"></span></p>
+    <p>Total: <span id="total"></span></p>
     <%= f.input :user_id, input_html: { value: params[:user_id] }, as: :hidden %>
     <%= f.input :congress_id, input_html: { value: params[:congress_id] }, as: :hidden %>
   </div>
@@ -25,3 +23,60 @@
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<script>
+var charisma = document.getElementById("charismaSlider");
+var charisma_output = document.getElementById("charismaValue");
+var intelligence = document.getElementById("intelligenceSlider");
+var intelligence_output = document.getElementById("intelligenceValue");
+var work_ethic = document.getElementById("work_ethicSlider");
+var work_ethic_output = document.getElementById("work_ethicValue");
+var moral_compass = document.getElementById("moral_compassSlider");
+var moral_compass_output = document.getElementById("moral_compassValue");
+var network = document.getElementById("networkSlider");
+var network_output = document.getElementById("networkValue");
+var total_output = document.getElementById("totalValue");
+charisma_output.innerHTML = charisma.value;
+intelligence_output.innerHTML = intelligence.value;
+work_ethic_output.innerHTML = work_ethic.value; 
+moral_compass_output.innerHTML = moral_compass.value;
+network_output.innerHTML = network.value;// Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+charisma.oninput = function() {
+  charisma_output.innerHTML = this.value;
+}
+intelligence.oninput = function() {
+  intelligence_output.innerHTML = this.value;
+}
+work_ethic.oninput = function() {
+  work_ethic_output.innerHTML = this.value;
+}
+moral_compass.oninput = function() {
+  moral_compass_output.innerHTML = this.value;
+}
+network.oninput = function() {
+  network_output.innerHTML = this.value;
+}
+
+$(function() {
+  $('input[type=range]').change(getTotal); // not () - you're not calling the function
+  getTotal(); // initialy call it
+});
+
+function getTotal() {
+  var first = parseInt(charisma.value) || 0;
+  var second = parseInt(intelligence.value) || 0;
+  var third = parseInt(work_ethic.value) || 0;
+  var fourth = parseInt(moral_compass.value) || 0;
+  var fifth = parseInt(network.value) || 0;
+  document.getElementById("total").innerHTML = first + second + third + fourth + fifth;
+  var total = first + second + third + fourth + fifth;
+  if (total > 250) {
+      document.getElementById("total").style.color = '#FF0000';
+    }
+  else if (total <= 250) {
+      document.getElementById("total").style.color = '#008000';
+    }
+}
+</script>

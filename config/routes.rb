@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
-  resources :districts
+  resources :districts do
+    member do
+    get 'join'
+    end
+  end
   resources :states
-  resources :politicians
+  resources :politicians 
+  
   resources :congresses do
     resources :memberships
     get 'join', :on => :member
